@@ -1,7 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:taxiappdemo/blocs/loginBloc.dart';
+import 'package:taxiappdemo/dilog/LoadingDialog.dart';
+import 'package:taxiappdemo/dilog/MsgDiaLog.dart';
+import 'package:taxiappdemo/main.dart';
 import 'package:taxiappdemo/screen/ResgisterScreen.dart';
+import 'package:taxiappdemo/screen/homePage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,8 +18,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  var _nameController = new TextEditingController();
+  var _passController = new TextEditingController();
 
   bool _showPass = false;
+
+  LogInBloc logInBloc = new LogInBloc();
 
   @override
   void initState() {
@@ -74,12 +83,21 @@ class _LoginScreenState extends State<LoginScreen>
                   child: Container(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(3, 0, 0, 0),
-                      child: TextField(
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10.0),
-                              labelText: "User Name",
-                              labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 15))),
+                      child: StreamBuilder(
+                          stream: logInBloc.nameStream,
+                          builder: (context, snapshot) {
+                            return TextField(
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                    errorText: snapshot.hasError
+                                        ? snapshot.error.toString()
+                                        : null,
+                                    contentPadding: EdgeInsets.all(10.0),
+                                    labelText: "User Name",
+                                    labelStyle: TextStyle(
+                                        color: Color(0xff888888),
+                                        fontSize: 15)));
+                          }),
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -99,15 +117,24 @@ class _LoginScreenState extends State<LoginScreen>
                       child: Stack(
                         alignment: AlignmentDirectional.centerEnd,
                         children: [
-                          TextField(
-                              obscureText: !_showPass,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(10.0),
-                                  labelText: "PASWWORD",
-                                  labelStyle: TextStyle(
-                                      color: Color(0xff888888), fontSize: 15)),
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black)),
+                          StreamBuilder(
+                              stream: logInBloc.passStream,
+                              builder: (context, snapshot) {
+                                return TextField(
+                                    controller: _passController,
+                                    obscureText: !_showPass,
+                                    decoration: InputDecoration(
+                                        errorText: snapshot.hasError
+                                            ? snapshot.error.toString()
+                                            : null,
+                                        contentPadding: EdgeInsets.all(10.0),
+                                        labelText: "PASWWORD",
+                                        labelStyle: TextStyle(
+                                            color: Color(0xff888888),
+                                            fontSize: 15)),
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black));
+                              }),
                           GestureDetector(
                             onTap: onToggleShowPass,
                             child: Text(
@@ -148,21 +175,20 @@ class _LoginScreenState extends State<LoginScreen>
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
                   child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: RaisedButton(
-                      child: Text(
-                        "Log in",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                      onPressed: () {
-                        print("object");
-                      },
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6))),
-                    ),
-                  ),
+                      width: double.infinity,
+                      height: 50,
+                      child: RaisedButton(
+                        child: Text(
+                          "Log in",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        onPressed: () {
+                          _loginAction(context);
+                        },
+                        color: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(6))),
+                      )),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -172,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen>
                         style: TextStyle(color: Colors.black26, fontSize: 16),
                         children: [
                           TextSpan(
-                              text: "  Sign up for a new acccount",
+                              text: "   Sign up for a new acccount",
                               style:
                                   TextStyle(color: Colors.blue, fontSize: 16),
                               recognizer: TapGestureRecognizer()
@@ -192,6 +218,26 @@ class _LoginScreenState extends State<LoginScreen>
         ),
       ),
     );
+  }
+
+  void _loginAction(BuildContext context) {
+    if (logInBloc.isValid(_nameController.text, _passController.text)) {
+      LoadingDialog.showLoadingDialog(context, "Loading....");
+      var auth = MyApp.of(context);
+
+      auth.logInBloc.onSignIn(
+          _nameController.text,
+          _passController.text,
+          () => {
+                LoadingDialog.hideLoadingDiaLog(context),
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage()))
+              },
+          (err) => {
+                LoadingDialog.hideLoadingDiaLog(context),
+                MSgDiaLog.showMSGDiaLog(context, "Login fail", err)
+              });
+    }
   }
 
   void onToggleShowPass() {
