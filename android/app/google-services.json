@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "329242683294",
+    "firebase_url": "https://taxiapp-98430-default-rtdb.firebaseio.com",
+    "project_id": "taxiapp-98430",
+    "storage_bucket": "taxiapp-98430.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329242683294:android:8d8bcfbda6b4abc061188f",
+        "android_client_info": {
+          "package_name": "com.example.taxiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329242683294-83bg9e661vp5ph14ioksat0ka0jtbisj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALngqlmOrcgoPdvJ0hgzyqg6xCMEOoN7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329242683294-83bg9e661vp5ph14ioksat0ka0jtbisj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "329242683294-1va3ftuo00mg679hgdl7n42lemv3e6s0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.taxiappdemo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329242683294:android:2d7179faf999498061188f",
+        "android_client_info": {
+          "package_name": "com.example.taxiappdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329242683294-83bg9e661vp5ph14ioksat0ka0jtbisj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALngqlmOrcgoPdvJ0hgzyqg6xCMEOoN7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329242683294-83bg9e661vp5ph14ioksat0ka0jtbisj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "329242683294-1va3ftuo00mg679hgdl7n42lemv3e6s0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.taxiappdemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

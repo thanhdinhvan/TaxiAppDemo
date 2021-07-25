@@ -57,6 +57,10 @@ flutter:
   assets:
     - icons8-taxi-96.png
     - crossover.png
+    - user.jpg
+    - lock.png
+    - mail.png
+    - phone.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
