@@ -69,7 +69,6 @@ class _RegisterBodyState extends State<RegisterScreen> {
                       stream: registerBloc.nameStream,
                       builder: (context, snapshot) => TextField(
                             controller: _nameController,
-                            maxLines: 10,
                             style: TextStyle(fontSize: 14, color: Colors.black),
                             decoration: InputDecoration(
                                 errorText: snapshot.hasError

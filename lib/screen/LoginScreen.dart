@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:taxiappdemo/blocs/loginBloc.dart';
 import 'package:taxiappdemo/dilog/LoadingDialog.dart';
 import 'package:taxiappdemo/dilog/MsgDiaLog.dart';
+import 'package:taxiappdemo/main.dart';
 import 'package:taxiappdemo/screen/ResgisterScreen.dart';
 import 'package:taxiappdemo/screen/homePage.dart';
 
@@ -222,7 +223,9 @@ class _LoginScreenState extends State<LoginScreen>
   void _loginAction(BuildContext context) {
     if (logInBloc.isValid(_nameController.text, _passController.text)) {
       LoadingDialog.showLoadingDialog(context, "Loading....");
-      logInBloc.onSignIn(
+      var auth = MyApp.of(context);
+
+      auth.logInBloc.onSignIn(
           _nameController.text,
           _passController.text,
           () => {

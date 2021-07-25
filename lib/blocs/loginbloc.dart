@@ -9,15 +9,12 @@ class LogInBloc {
 
   StreamController _nameController = new StreamController();
   StreamController _passController = new StreamController();
-  StreamController _authController = new StreamController();
 
-  Stream get authResults => _authController.stream;
   Stream get nameStream => _nameController.stream;
   Stream get passStream => _passController.stream;
 
   LogInBloc() {}
   void dispose() {
-    _authController.close();
     _nameController.close();
     _passController.close();
   }
@@ -38,6 +35,7 @@ class LogInBloc {
 
   void onSignIn(
       String name, String pass, Function onSuccess, Function(String) onError) {
-    _firAuth.signIn(name, pass, () => {onSuccess()}, (err) => {onError(err)});
+    _firAuth.signIn(name, pass, (value) => {print(value), onSuccess()},
+        (err) => {onError(err)});
   }
 }

@@ -61,9 +61,4 @@ class RegisterBloc {
       Function() onSuccess, Function(String) onError) {
     _firAuth.signUp(name, pass, email, phone, onSuccess, onError);
   }
-
-  void _onSignIn(String name, String pass) {
-    _firAuth.signIn(name, pass, () => {_authController.sink.add(true)},
-        (err) => {_authController.sink.add(false)});
-  }
 }

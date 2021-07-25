@@ -22,11 +22,11 @@ class FireAuth {
   }
 
 // MARK: - Đăng nhập firebase
-  void signIn(
-      String email, String pass, Function onSuccess, Function(String) onError) {
+  void signIn(String email, String pass, Function(String) onSuccess,
+      Function(String) onError) {
     _firabaseAuth
         .signInWithEmailAndPassword(email: email, password: pass)
-        .then((value) => {onSuccess()})
+        .then((value) => {onSuccess(value.toString())})
         .catchError((err) => {onError("Sign In fail")});
   }
 
